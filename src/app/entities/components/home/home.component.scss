@@ -1,0 +1,120 @@
+:host {
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Play:wght@400;700&display=swap');
+  .container {
+    display: flex;
+    font-family: "Play", sans-serif;
+    justify-content: space-between;
+  }
+  h1{
+    font-size: 18px;
+    font-family: "Play", sans-serif;
+  }
+  dx-select-box.st{
+    font-family: "Play", sans-serif;
+    font-weight: 500;
+    font-size: 18px; 
+  }
+  dx-tag-box.st {
+    font-family: "Play", sans-serif;
+    font-weight: 500;
+    font-size: 18px; 
+  }
+  input.in {
+    font-family: "Play", sans-serif;
+    font-weight: 500;
+    font-size: 18px; 
+  }
+  .left-panel,
+  .right-panel {
+    width: 45%;
+  }
+  .add-section {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #0059ff1c;
+    margin-bottom: 20px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+    font-family: "Play", sans-serif;
+    font-weight: 700;
+    font-size: 18px; 
+  }
+  .user-container {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #0059ff1c;
+  }
+  .user-header {
+    display: flex;
+    font-weight: 700;
+    font-size: 24px;
+    color:rgb(245, 245, 245);
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0088ffb6;
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  .user-details {
+    padding: 10px;
+    font-size: 18px;
+  }
+  .arrow-icon {
+    margin-left: 10px;
+  }
+  .dx-button {
+    margin-right: 10px;
+    font-size: 18px;
+    font-weight: 900;
+    &.add-user-btn, &.add-ability-btn, &.delete-btn {
+      margin-bottom: 20px; 
+      width: 300px;
+      background-color: #0088ff;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 3px 15px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 5px 15px 0 #0088ff;
+      transition: 0.7s; 
+      &:hover {
+        background-color: #0afc0299;
+        transform: translate(0,-3px);
+        box-shadow: 0 20px 40px 0 #0afc0299;
+      }
+    }
+    &.delete-btn {
+      width: 200px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      background-color: #ff0000;
+      box-shadow: 0 5px 15px 0 #ff0000;
+      transition: 0.7s; 
+      &:hover {
+        background-color: #cc0000;
+        transform: translate(0,-3px);
+        box-shadow: 0 20px 40px 0 #cc0000;
+      }
+    }
+    &.accordion-btn {
+      width: 40px;
+    }
+  }
+  .search-container {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    label {
+      margin-right: 10px;
+    }
+  }
+  .sort-container label {
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,224 @@
+<div class="container">
+  <div class="left-panel">
+    <div class="add-section">
+      <div class="form-group">
+        <label for="name">
+          Имя героя: &nbsp;&nbsp;
+        </label>
+        <input [(ngModel)]="user.name" 
+              id="name" 
+              placeholder="Введите имя героя" 
+              dxTextBox required pattern="[A-Za-zА-Яа-яЁё\s]+" 
+              class="in"
+      ></div>
+      <div class="form-group">
+        <label for="strength">
+          Сила: &nbsp;&nbsp;
+        </label>
+        <input [(ngModel)]="user.strength" 
+               type='number'
+               id="strength" 
+               placeholder="Сила"
+               dxNumberBox [min]="0" 
+               dxNumberBox [max]="100" 
+               class= "in"
+      ></div>
+      <div class="form-group">
+        <label for="abilities">
+          Способности:
+        </label>
+        <h1></h1>
+        <dx-tag-box [dataSource]="availableAbilities" 
+                    [(value)]="user.abilities" 
+                    class="st"
+        ></dx-tag-box>
+      </div>
+      <div class="form-group">
+        <label for="level">
+          Уровень: &nbsp;&nbsp;
+        </label>
+        <input [(ngModel)]="user.level"  
+               type='number' 
+               id="level" 
+               dxNumberBox [min]="0" 
+               dxNumberBox [max]="100" 
+               class="in"
+      ></div>
+      <dx-button [disabled]="!isFormValid()" 
+                (click)="onSubmit()"
+                text="Добавить нового героя" 
+                class="add-user-btn">
+      </dx-button>
+    </div>
+    <div class="add-section">
+      <div class="form-group">
+        <label for="newAbility">
+          Новая способность: &nbsp;&nbsp;
+        </label>
+        <input id="newAbility" [(ngModel)]="newAbility" dxTextBox required class="in">
+      </div>
+      <dx-button [disabled]="!isAbilityValid()" 
+                 (click)="addAbility()"
+                 text="Добавить"
+                 class="add-ability-btn">
+      </dx-button>
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="add-section">
+    <div class="search-container">
+      <label for="levelRange">
+        Уровень героя: &nbsp;&nbsp;
+      </label>
+      <input [(ngModel)]="minLevel" 
+             (ngModelChange)="applyFilters()"
+             type="number"  
+             id="minLevel" 
+             placeholder="Min" 
+             dxNumberBox [min]="0" 
+             dxNumberBox [max]="100" 
+             class="in">&nbsp;
+      <input [(ngModel)]="maxLevel"
+             (ngModelChange)="applyFilters()"   
+             type="number"
+             id="maxLevel"
+             placeholder="Max" 
+             dxNumberBox [min]="0" 
+             dxNumberBox [max]="100" 
+             class="in"
+    ></div>
+    <div class="search-container">
+      <label for="searchInput">
+        Поиск по имени: &nbsp;&nbsp;
+      </label>
+      <input [(ngModel)]="searchTerm"
+             (input)="applyFilters()"
+             id="searchInput" 
+             dxTextBox 
+             class="in"
+    ></div>
+    <div class="search-container">
+      <label for="levelSort">
+        Сортировка по уровню:
+      </label>
+      <h1></h1>
+      <dx-select-box (onValueChanged)="applyFilters()"
+                     [dataSource]="sortOptions" 
+                     [(value)]="selectedSort"  
+                     class="st"
+      ></dx-select-box>
+  </div>
+    <div class="search-container">
+      <label for="abilitySelect">
+        Способности:
+      </label>
+      <h1></h1>
+      <dx-tag-box [dataSource]="availableAbilities"
+                  [(value)]="selectedAbilities" 
+                  (valueChange)="applyFilters()" 
+                  mode="multi" 
+                  class="st"
+      ></dx-tag-box>
+    </div>
+  </div>
+    <div *ngFor="let user of users" 
+         class="user-container">
+      <div (click)="toggleAccordion(user.id)" 
+           class="user-header"
+        ><div>
+          {{ user.name }}
+        </div>
+        <div class="arrow-icon">
+          <dx-button *ngIf="isAccordionExpanded(user.id)"
+                     icon="chevronup"
+          ></dx-button>
+          <dx-button *ngIf="!isAccordionExpanded(user.id)" 
+                     icon="chevrondown"
+          ></dx-button>
+        </div>
+      </div>
+      <div class="user-details" *ngIf="isAccordionExpanded(user.id)">
+        <h1>Сила: {{ user.strength }}</h1>
+        <h1>Способности: {{ user.abilities }}</h1>
+        <h1>Уровень: {{ user.level }}</h1>
+        <dx-button  (click)=" openConfirmPopup(user.id, user.name)"
+                    text="Удалить героя" 
+                    class="delete-btn"> 
+        </dx-button>
+      </div>
+    </div>
+  </div>
+</div>
+<dx-popup #confirmPopup 
+          [visible]="confirmPopupVisible" 
+          title="Подтверждение удаления" 
+          [width]="300" 
+          [height]="200" 
+          [showCloseButton]="false"
+          [dragEnabled]="false"
+  ><div class="popup-content">
+    <p>Вы уверены, что хотите удалить героя?</p>
+    <dx-button *ngIf="deletedUserId !== null"  
+               (click)="confirmDelete(deletedUserId)"
+               text="Да" 
+               class="popup-button"
+    ></dx-button>
+    <dx-button (click)="confirmPopupVisible = false" 
+               text="Нет" 
+               class="popup-button"
+    ></dx-button>
+  </div>
+</dx-popup>
+<dx-popup #deletePopup 
+          [visible]="deletePopupVisible" 
+          title="Успешное удаление" 
+          [width]="300" 
+          [height]="200"  
+          [showCloseButton]="false"
+          [dragEnabled]="false"
+  ><div class="popup-content">
+    <p>
+      <span>Герой с ID </span>
+      <b>{{ deletedUserId }}</b>
+      <span> под именем </span>
+      <b>{{ deletedUserName }}</b>
+      <span> успешно удалён.</span>
+    </p>
+    <dx-button (click)="deletePopupVisible = false"
+               text="OK" 
+               class="popup-button"
+    ></dx-button>
+  </div>
+</dx-popup>
+<dx-popup #secondpopup [visible]="secondpopupVisible"
+                       [dragEnabled]="false" 
+                       title="Уведомление о добавлении способности" 
+                       [width]="500" 
+                       [height]="200" 
+                       [showCloseButton]="false"
+  ><div class="popup-content">
+    <p>
+      <span>Способность </span>
+      <b>{{ addedAbility }}</b>
+      <span> успешно добавлена.</span>
+    </p>
+    <dx-button (click)="secondpopupVisible = false"  
+               text="OK" 
+               class="popup-buttons"
+    ></dx-button>
+  </div>
+</dx-popup>
+<dx-popup #thirdpopup [visible]="thirdpopupVisible"
+                       [dragEnabled]="false" 
+                       title="Уведомление о добавлении героя" 
+                       [width]="500" 
+                       [height]="200" 
+                       [showCloseButton]="false">
+  <div class="popup-content">
+    <p>Герой под именем <b>{{ addedUserName }}</b> успешно добавлен.</p>
+    <dx-button (click)="thirdpopupVisible = false" 
+               text="OK" 
+               class="popup-buttons"
+    ></dx-button>
+  </div>
+</dx-popup>

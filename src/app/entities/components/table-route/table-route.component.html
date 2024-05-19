@@ -1,0 +1,82 @@
+<div class="table-container">
+    <h1>База данных героев</h1>
+    <dx-data-grid id="gridContainer"
+                  [dataSource]="users"
+                  [showBorders]="true"
+                  keyExpr="id"
+                  class="data-grid">
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxi-column dataField="id" 
+                    caption="ID"  
+                    [width]="'auto'">
+        </dxi-column>
+        <dxi-column dataField="name" 
+                    caption="Имя"  
+                    [width]="'auto'"
+        ></dxi-column>
+        <dxi-column dataField="strength" 
+                    caption="Сила"  
+                    [width]="'auto'"
+        ></dxi-column>
+        <dxi-column dataField="abilities" 
+                    caption="Способности"  
+                    [width]="'auto'"
+        ></dxi-column>
+        <dxi-column [allowResizing]="false"
+                    dataField="level" 
+                    caption="Уровень"  
+                    [width]="100" 
+        ></dxi-column>
+        <dxi-column cellTemplate="cellTemplate"
+                    [allowResizing]="false" 
+                    [width]="50" >
+            <div *dxTemplate="let data of 'cellTemplate'">
+                    <dx-button (onClick)="openConfirmPopup(data.data.id, data.data.name)"
+                               class="delete-btn"
+                               icon="trash"
+                    ></dx-button>
+                </div>
+        </dxi-column>
+    </dx-data-grid>
+<dx-popup #confirmPopup 
+          [visible]="confirmPopupVisible"
+          [showCloseButton]="false"
+          [dragEnabled]="false"
+          title="Подтверждение удаления" 
+          [width]="300" 
+          [height]="200" 
+  ><div class="popup-content">
+    <p>Вы уверены, что хотите удалить героя?</p>
+    <dx-button *ngIf="deletedUserId !== null" 
+               (click)="confirmDelete(deletedUserId)" 
+               text="Да" 
+               class="popup-button"
+    ></dx-button>
+    <dx-button (click)="confirmPopupVisible = false"
+               text="Нет"
+               class="popup-button"
+    ></dx-button>
+  </div>
+</dx-popup>
+<dx-popup #deletePopup 
+          [visible]="deletePopupVisible"
+          [showCloseButton]="false"
+          [dragEnabled]="false" 
+          title="Удаление героя" 
+          [width]="300" 
+          [height]="200"  
+  ><div class="popup-content">
+    <p>
+        <span>Герой с ID </span>
+        <b>{{ deletedUserId }}</b>
+        <span> под именем </span>
+        <b>{{ deletedUserName }}</b>
+        <span> успешно удалён.</span>
+    </p>
+    <dx-button (click)="deletePopupVisible = false"
+               text="OK"  
+               class="popup-button"
+    ></dx-button>
+  </div>
+</dx-popup>
+</div>

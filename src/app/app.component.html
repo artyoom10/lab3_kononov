@@ -1,0 +1,25 @@
+<div class="loading-container" [ngClass]="{ 'loading': isLoading }">
+  <img src="assets/qq1.png" alt="Logo" class="logo1">
+  <!-- <img src="assets/download.svg" alt="Logo" class="logo"> -->
+  <img src="assets/qq.png" alt="Logo" class="podp">
+  
+  <div class="loader"></div>
+</div>
+<div *ngIf="!isLoading">
+  <div class="container">
+    <div class="navbar">
+      <a routerLink="/home" 
+         routerLinkActive="active-link" 
+         class="nav-link">Главная страница</a>
+      <a routerLink="/table" 
+         routerLinkActive="active-link" 
+         class="nav-link">Таблица</a>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+
+  

@@ -1,0 +1,43 @@
+:host {
+  .table-container {
+    width: 60%;
+    font-family: "Play", sans-serif;
+    margin: 0 auto;
+  }
+  dx-button.delete-btn {
+    width: 200px;
+    border: 1px #cc0000;
+    color: white !important;
+    background-color: #cc0000;
+    transition: 0.7s; 
+    &:hover {
+      background-color: #ff0000;
+      transform: translate(0,-3px);
+    }
+  }
+  
+  
+  
+  h1 {
+    margin-bottom: 20px; 
+  }
+  .data-grid {
+    font-family: "Play", sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  .dx-data-row {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  .dx-data-cell {
+    border: 1px solid #ddd;
+    padding: 8px;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
